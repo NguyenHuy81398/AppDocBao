@@ -81,6 +81,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intentTK = new Intent(MainActivity.this, TimKiemActivity.class);
             startActivity(intentTK);
         }
+
+        if (id == R.id.nav_dangnhap) {
+            Intent intentLG = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intentLG);
+        }
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -182,7 +188,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onPostExecute(aVoid);
             viewPager.setAdapter(adapter);
             dialog.dismiss();
-
         }
     }
 }

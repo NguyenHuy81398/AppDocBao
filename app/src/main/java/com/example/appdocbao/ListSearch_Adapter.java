@@ -1,6 +1,5 @@
 package com.example.appdocbao;
 
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,14 +12,16 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-public class ListTinTuc_Adapter extends BaseAdapter {
+public class ListSearch_Adapter extends BaseAdapter {
     Context context;
     ArrayList<ItemTinTuc> itemTinTucs;
-    SQLHelperTinTuc sqlHelperTinTuc;
+    ArrayList<ItemTinTuc> listSearch;
 
-    public ListTinTuc_Adapter(Context context, ArrayList<ItemTinTuc> itemTinTucs) {
+    public ListSearch_Adapter(Context context, ArrayList<ItemTinTuc> itemTinTucs) {
         this.context = context;
         this.itemTinTucs = itemTinTucs;
+        this.listSearch = new ArrayList<>();
+        listSearch.addAll(itemTinTucs);
     }
 
     @Override
@@ -38,16 +39,25 @@ public class ListTinTuc_Adapter extends BaseAdapter {
         return i;
     }
 
+    public void filter(String query){
+        itemTinTucs.clear();
+        if(query.length() == 0){
+            itemTinTucs.addAll(listSearch);
+        }else {
+            for (ItemTinTuc itemTinTuc: listSearch){
+                if(itemTinTuc.getTitle().toLowerCase().contains(query.toLowerCase())){
+                    itemTinTucs.add(itemTinTuc);
+                }
+            }
+            notifyDataSetChanged();
+        }
+    }
+
     @Override
-    public View getView(final int i, View view, ViewGroup viewGroup) {
+    public View getView(int i, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
 
-        View v;
-        if(i == 0){
-            v = inflater.inflate(R.layout.item_tintuc_big, viewGroup, false);
-        }else {
-            v = inflater.inflate(R.layout.item_tintuc, viewGroup, false);
-        }
+        View v = inflater.inflate(R.layout.item_tintuc, viewGroup, false);
 
 
         TextView txtTitle = v.findViewById(R.id.txtTitle);
@@ -59,7 +69,6 @@ public class ListTinTuc_Adapter extends BaseAdapter {
         txtPubDate.setText(itemTinTuc.getPubDate());
         Glide.with(context).load(itemTinTuc.getImg()).into(imageView);
 
-        sqlHelperTinTuc = new SQLHelperTinTuc(context);
         return v;
     }
 }

@@ -7,7 +7,16 @@
     tools:context=".TimKiemActivity">
 
     <SearchView
+        android:id="@+id/searchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:queryHint="Nhập từ khóa tìm kiếm"/>
+        android:queryHint="Nhập từ khóa tìm kiếm"
+        android:iconifiedByDefault="false"/>
+
+    <ListView
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_below="@+id/searchView"
+        android:id="@+id/lvSeach"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </RelativeLayout>
